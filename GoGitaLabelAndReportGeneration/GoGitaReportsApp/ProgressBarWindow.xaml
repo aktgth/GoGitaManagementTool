@@ -1,0 +1,8 @@
+﻿<Window x:Class="GoGitaReportsApp.ProgressBarWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Go Gita Reports Progress" Height="300" Width="500">
+    <Grid Margin="20,20,20,20">
+        <ProgressBar Minimum="0" Maximum="100" Name="pbStatus" IsIndeterminate="True" Margin="10,67,10,67" />
+    </Grid>
+</Window>

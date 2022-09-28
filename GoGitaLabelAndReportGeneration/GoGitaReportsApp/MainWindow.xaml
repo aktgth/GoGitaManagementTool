@@ -1,0 +1,117 @@
+﻿<Window x:Class="GoGitaReportsApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GoGitaReportsApp"
+        Icon="cropped-gogita-1-32x32.ico"
+        mc:Ignorable="d"
+        Title="GoGita Orders Report" Height="750" Width="900">
+    <Grid Name="pnlMainGrid" Background="GhostWhite" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="2.5*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+        <!--<TextBlock x:Name="textBlock" Margin="160,0,191,0" TextWrapping="Wrap" Text="Hello, WPF!" IsEnabled="False" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+        <Grid Grid.Row="0" Margin="191,5,209,5">
+            <GroupBox Margin="0,10,0,21" Padding="10" HorizontalAlignment="Center" Background="white" Width="478">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold">Report To Generate</TextBlock>
+                    </StackPanel>
+                </GroupBox.Header>
+                <WrapPanel Height="60">
+                    <RadioButton x:Name="reportRadioButton1" Checked="ReportRadioButton_Checked" Content="Order Address Labels" IsChecked="True" Width="150"/>
+                    <RadioButton x:Name="reportRadioButton2" Checked="ReportRadioButton_Checked" Content="Order Book list" Width="120"/>
+                    <RadioButton x:Name="reportRadioButton3" Checked="ReportRadioButton_Checked" Content="Order Summary" Width="150"/>
+                </WrapPanel>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1" Margin="175,5,195,5">
+            <GroupBox Margin="0,10,0,28" Padding="10" HorizontalAlignment="Center" Background="white" Width="419">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontWeight="Bold">Delivery Method</TextBlock>
+                    </StackPanel>
+                </GroupBox.Header>
+                <WrapPanel Height="60">
+                    <RadioButton x:Name="radioButton1" Checked="DeliveryRadioButton_Checked" Content="Delivery" IsChecked="True" Width="150"/>
+                    <RadioButton x:Name="radioButton2" Checked="DeliveryRadioButton_Checked" Content="Pickup from ISKCON Whitefield" Width="200"/>
+                </WrapPanel>
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="2" Margin="186,5,195,5" AllowDrop="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label Grid.Column="0" Grid.Row="0" Content="Payment Status List To Choose (Drag)" FontWeight="DemiBold"/>
+            <Label Grid.Column="2" Grid.Row="0" Content="Final Payment Status List (Drop)" FontWeight="DemiBold"/>
+            <ListView Name="srcListView"  AllowDrop="True" Drop="SrcItemList_Drop" Grid.Column="0" Grid.Row="1"
+                        GiveFeedback="SrcItemList_GiveFeedback"
+                        DragEnter="SrcItemList_DragEnter" DragLeave="SrcItemList_DragLeave"
+                        DragOver="SrcItemList_DragOver">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseMove" Handler="SrcItem_MouseMove" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StatusType}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <GridSplitter Grid.Column="1" Grid.Row="1" Width="50" HorizontalAlignment="Stretch" />
+            <ListView Name="destListView" Grid.Column="2" Grid.Row="1" AllowDrop="True" Drop="DestItemList_Drop"
+                        GiveFeedback="DestItemList_GiveFeedback"
+                        DragEnter="DestItemList_DragEnter" DragLeave="DestItemList_DragLeave"
+                        DragOver="DestItemList_DragOver">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="MouseMove" Handler="DestItem_MouseMove" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding StatusType}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="3" Margin="207,5,216,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontWeight="DemiBold">Date From:</Label>
+            <DatePicker x:Name="datePickerFrom" SelectedDateChanged="datePickerFrom_SelectedDateChanged" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="24" Width="102" />
+        </Grid>
+        <Grid Grid.Row="4" Margin="207,5,216,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontWeight="DemiBold">Date To:</Label>
+            <DatePicker x:Name="datePickerTo" SelectedDateChanged="datePickerTo_SelectedDateChanged" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </Grid>
+        <Button Grid.Row="5" x:Name="button" Click="GenerateButton_Click" HorizontalAlignment="Left" Margin="394,15,0,5" VerticalAlignment="Top" >
+            <Button.FontWeight>Bold</Button.FontWeight>
+            <Button.Content>
+                <WrapPanel>
+                    <TextBlock FontWeight="DemiBold" Width="100" TextAlignment="Center">Generate!</TextBlock>
+                </WrapPanel>
+            </Button.Content>
+        </Button>
+    </Grid>
+</Window>
