@@ -69,7 +69,7 @@ namespace GoGitaReportsApp
             //sending http request
             var httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
             List<Order> orders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
-            orders.Select(order => order.shipping_lines[0].method_id == deliveryMethod).ToList();
+            orders = orders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
             // Create a table.
             var table = document.AddTable(1, 3);
             table.Alignment = Alignment.left;
@@ -110,7 +110,7 @@ namespace GoGitaReportsApp
                 httpRequestParams.parameters = string.Format(urlParamsBuilder.ToString(), pageNum);
                 httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
                 orders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
-                orders.Select(order => order.shipping_lines[0].method_id == deliveryMethod).ToList();
+                orders = orders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
             }
             table.SetWidths(new float[] { 200f, 200f, 200f });
             table.AutoFit = AutoFit.Contents;
@@ -144,6 +144,7 @@ namespace GoGitaReportsApp
             //sending http request
             var httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
             List<Order> orders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
+            orders = orders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
             while (orders.Count > 0)
             {
                 foreach (Order order in orders)
@@ -163,7 +164,7 @@ namespace GoGitaReportsApp
                 httpRequestParams.parameters = string.Format(urlParamsBuilder.ToString(), pageNum);
                 httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
                 orders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
-                orders.Select(order => order.shipping_lines[0].method_id == deliveryMethod).ToList();
+                orders = orders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
             }
             document.Save();
         }
@@ -192,6 +193,7 @@ namespace GoGitaReportsApp
             //sending http request
             var httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
             List<Order> currOrders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
+            currOrders = currOrders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
             List<Order> totalOrders = new List<Order>();
             Dictionary<string, BookInfoView> bookCodeToBookInfoView = new Dictionary<string, BookInfoView>();
             Dictionary<string, BookInfoView> bookCodeToBookInfoViewPrePacked = new Dictionary<string, BookInfoView>();
@@ -205,7 +207,7 @@ namespace GoGitaReportsApp
                 httpRequestParams.parameters = string.Format(urlParamsBuilder.ToString(), pageNum);
                 httpResponse = HttpUtils.GetHttpResponseMessage(httpRequestParams, new Dictionary<string, string>());
                 currOrders = httpResponse.Content.ReadAsAsync<List<Order>>().Result;
-                currOrders.Select(order => order.shipping_lines[0].method_id == deliveryMethod).ToList();
+                currOrders = currOrders.Where(order => order.shipping_lines[0].method_title == deliveryMethod).ToList();
                 totalOrders.AddRange(currOrders);
             }
 

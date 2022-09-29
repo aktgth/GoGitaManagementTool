@@ -50,44 +50,51 @@
                 <ColumnDefinition Width="5" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Label Grid.Column="0" Grid.Row="0" Content="Payment Status List To Choose (Drag)" FontWeight="DemiBold"/>
-            <Label Grid.Column="2" Grid.Row="0" Content="Final Payment Status List (Drop)" FontWeight="DemiBold"/>
-            <ListView Name="srcListView"  AllowDrop="True" Drop="SrcItemList_Drop" Grid.Column="0" Grid.Row="1"
-                        GiveFeedback="SrcItemList_GiveFeedback"
+            <Grid Grid.Column="0" AllowDrop="True" Drop="SrcItemList_Drop" 
+                  GiveFeedback="SrcItemList_GiveFeedback"
                         DragEnter="SrcItemList_DragEnter" DragLeave="SrcItemList_DragLeave"
                         DragOver="SrcItemList_DragOver">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <EventSetter Event="MouseMove" Handler="SrcItem_MouseMove" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding StatusType}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Payment Status List To Choose (Drag)" FontWeight="DemiBold"/>
+                <ListView Name="srcListView" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <EventSetter Event="MouseMove" Handler="SrcItem_MouseMove" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StatusType}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
             <GridSplitter Grid.Column="1" Grid.Row="1" Width="50" HorizontalAlignment="Stretch" />
-            <ListView Name="destListView" Grid.Column="2" Grid.Row="1" AllowDrop="True" Drop="DestItemList_Drop"
+            <Grid Grid.Column="2" AllowDrop="True" Drop="DestItemList_Drop"
                         GiveFeedback="DestItemList_GiveFeedback"
                         DragEnter="DestItemList_DragEnter" DragLeave="DestItemList_DragLeave"
                         DragOver="DestItemList_DragOver">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <EventSetter Event="MouseMove" Handler="DestItem_MouseMove" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding StatusType}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Final Payment Status List (Drop)" FontWeight="DemiBold"/>
+                <ListView Name="destListView" Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <EventSetter Event="MouseMove" Handler="DestItem_MouseMove" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding StatusType}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
         <Grid Grid.Row="3" Margin="207,5,216,5">
             <Grid.ColumnDefinitions>
